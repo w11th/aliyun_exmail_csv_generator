@@ -1,3 +1,3 @@
-module AliyunExmailCsvGenerator
+module AliyunExmailCSVGenerator
   VERSION = "0.1.0"
 end
