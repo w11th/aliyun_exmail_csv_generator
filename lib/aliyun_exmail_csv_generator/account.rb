@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'ruby-pinyin'
 
 module AliyunExmailCSVGenerator
@@ -5,23 +6,24 @@ module AliyunExmailCSVGenerator
     DEFAULT_OPTIONS = {
       workno: nil,
       password: 'Hello1234',
+      department: '公司',
       phone_ext: nil,
       title: nil,
       mobile: nil,
       capacity: 2048
     }
 
-    def initialize(name, email, department, options = DEFAULT_OPTIONS)
+    def initialize(name, email, options = DEFAULT_OPTIONS)
       @name       = name
       @email      = email
-      @department = department
 
       @workno     = options[:workno]
-      @password   = options[:password]
+      @password   = options[:password] || DEFAULT_OPTIONS[:password]
+      @department = options[:department] || DEFAULT_OPTIONS[:department]
       @phone_ext  = options[:phone_ext]
       @title      = options[:title]
       @mobile     = options[:mobile]
-      @capacity   = options[:capacity]
+      @capacity   = options[:capacity] || DEFAULT_OPTIONS[:capacity]
     end
 
     def to_csv_row
@@ -29,15 +31,20 @@ module AliyunExmailCSVGenerator
     end
 
     class << self
-      def from(name_list, department, options)
+      def from(name_list, options)
         accounts = []
         name_list.each do |name|
-          name_pinyin = PinYin.of_string(name)
-          name_pinyin = name_pinyin.push('.').rotate! if name_pinyin.length > 1
-          email = "#{name_pinyin.join}@qcpt.org"
-          accounts << Account.new(name, email, department, options)
+          name_pinyin = name_to_pinyin(name)
+          email = "#{name_pinyin}@qcpt.org"
+          accounts << Account.new(name, email, options)
         end
         accounts
+      end
+
+      def name_to_pinyin(name)
+        name_pinyin = PinYin.of_string(name)
+        name_pinyin = name_pinyin.push('.').rotate! if name_pinyin.length > 1
+        name_pinyin.join
       end
     end
   end

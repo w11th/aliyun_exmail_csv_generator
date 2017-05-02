@@ -41,15 +41,13 @@ module AliyunExmailCSVGenerator
         name_list << line.strip unless line.empty?
       end
 
-      if options.department
-        department = options.department
-      else
+      unless options.department
         puts "Input the department (type enter for default: 公司):"
-        department = $stdin.gets.strip!
+        options.department = $stdin.gets.strip!
+        options.department = Account.DEFAULT_DEPARTMENT if options.department.empty?
       end
-      department = Account.DEFAULT_DEPARTMENT if department.empty?
 
-      accounts = Account.from(name_list, department, options)
+      accounts = Account.from(name_list, options)
 
       output = options.output || 'output.csv'
 
