@@ -49,10 +49,6 @@ module AliyunExmailCSVGenerator
       end
     end
 
-    it 'PinYin should work' do
-      expect(PinYin.of_string("留学".encode('UTF-8'))).to eq(['liu', 'xue'])
-    end
-
     context '.name_to_pinyin' do
       before do
         @name_list = %w(张三 李四 王五一 David\ Bowie)
