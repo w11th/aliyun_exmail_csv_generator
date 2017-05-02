@@ -42,9 +42,9 @@ module AliyunExmailCSVGenerator
       end
 
       unless options.department
-        puts "Input the department (type enter for default: 公司):"
-        options.department = $stdin.gets.strip!
-        options.department = Account.DEFAULT_DEPARTMENT if options.department.empty?
+        puts "Input the department (type enter for default: #{Account::DEFAULT_OPTIONS[:department]}):"
+        department = $stdin.gets.strip!
+        options.department = department unless department.empty?
       end
 
       accounts = Account.from(name_list, options)

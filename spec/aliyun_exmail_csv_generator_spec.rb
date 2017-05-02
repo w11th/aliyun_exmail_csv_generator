@@ -1,11 +1,7 @@
 require "spec_helper"
 
-RSpec.describe AliyunExmailCsvGenerator do
+RSpec.describe AliyunExmailCSVGenerator do
   it "has a version number" do
-    expect(AliyunExmailCsvGenerator::VERSION).not_to be nil
-  end
-
-  it "does something useful" do
-    expect(false).to eq(true)
+    expect(AliyunExmailCSVGenerator::VERSION).not_to be nil
   end
 end
